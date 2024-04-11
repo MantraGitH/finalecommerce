@@ -1,0 +1,344 @@
+components:
+  schema:
+    users:
+      PostUser:
+        type: object
+        properties:
+          status:
+            type: number
+            description: Código de estado de la operación
+          message:
+            type: string
+            description: Mensaje de estado de la operación
+          data:
+            type: object
+            properties:
+              first_name:
+                type: string
+                description: Nombre del Usurario
+              last_name:
+                type: string
+                description: Apellido del usuario
+              email:
+                type: string
+                description: Mail del usuario
+              password:
+                type: string
+                description: Contraseña del usuario
+              age:
+                type: number
+                description: Edad del usuario
+              role:
+                type: string
+                description: Rol del usuario
+              isGithub:
+                type: string
+                description: Registro mediante Github
+              isGoogle:
+                type: string
+                description: Registro mediante Gmail
+              id:
+                type: string
+                description: Id del usuario
+      LoginUser:
+        type: object
+        properties:
+          status:
+            type: number
+            description: Código de estado de la operación
+          message:
+            type: string
+            description: Mensaje de estado de la operación
+          data:
+            type: object
+            properties:
+              token:
+                type: string
+                description: Token del usuario
+              userId:
+                type: string
+                description: Id del usuario    
+      ProfileUser:
+        type: object
+        properties:
+          status:
+            type: number
+            description: Código de estado de la petición
+          message: 
+            type: string
+            description: Estado de la petición
+          data: 
+            type: object
+            description: Datos del Usuario
+            properties:
+              first_name:
+                type: string
+                description: Nombre de usuario
+              last_name:
+                type: string
+                description: Apellido del usuario
+              email:
+                type: string
+                description: Email del usuario
+              role:
+                type: string
+                description: Rol del usuario
+        example:
+          status: 200
+          message: Success
+          data:
+            first_name: "Camilo"
+            last_name: "Perdomo"
+            email: "camilo.perdomo@gmail"
+            role: "user"
+      GetAllUsers:
+        type: object
+        properties:
+          status:
+            type: string
+            description: Código de operación
+          message:
+            type: string
+            description: Estado de la operación
+          data:
+            type: array
+            description: Lista de usuarios
+            items: 
+              properties:
+                first_name:
+                  type: string
+                  description: Nombre del usuario
+                last_name:
+                  type: string
+                  description: Apellido del usuario
+                email:
+                  type: string
+                  description: Mail de usuario
+                age:
+                  type: number
+                  description: Edad del usuario
+                password:
+                  type: string
+                  description: Contraseña del usuario
+                role:
+                  type: string
+                  description: Rol del usuario
+                lastConnection:
+                  type: string
+                  format: date-time
+                  description: Fecha de última conexión en formato ISO 8601 (YYYY-MM-DDTHH:MM:SSZ)            
+    products: 
+      GetAllProducts:
+        type: object
+        properties:
+          status:
+            type: string
+            description: Código de la operación
+          message:
+            type: string
+            description: Estado de la operación
+          data:
+            type: array
+            description: Array con productos
+            items:
+              properties:
+                product_name:
+                  type: string
+                  description: Nombre del producto
+                product_description:
+                  type: string
+                  description: Descripción del producto
+                product_price:
+                  type: number
+                  description: Precio del producto
+                product_stock:
+                  type: number
+                  description: Cantidad de producto en stock
+                _id: 
+                  type: string
+                  description: Número de Id del producto
+                product_cathegory:
+                  type: string
+                  description: Categoría del producto
+      Product:
+        type: object
+        properties:
+          status:
+            type: string
+            description: Código de la operación
+          message:
+            type: string
+            description: Estado de la operación
+          data:
+            type: object
+            properties:
+              product_name:
+                type: string
+                description: Nombre del producto
+              product_description:
+                type: string
+                description: Descripción del producto
+              product_price:
+                type: number
+                description: Precio del producto
+              product_stock:
+                type: number
+                description: Cantidad de producto en stock
+              _id: 
+                type: string
+                description: Número de Id del producto
+              product_cathegory:
+                type: string
+                description: Categoría del producto
+    carts:
+      GetAllCarts:
+        type: object
+        properties:
+          status:
+            type: string
+            description: Código de la operación
+          message:
+            type: string
+            description: Estado de la operación
+          data:
+            type: array
+            description: Array de carritos del usuario
+            items:
+              properties:
+                id:
+                  type: string
+                  description: Nombre del producto
+                owner:
+                  type: string
+                  description: Mail del usuario que creó el carrito
+                products:
+                  type: array
+                  description: Array de productos en carrito
+                  items:
+                    properties:
+                      id:
+                        type: string
+                        description: Id de producto en carrito
+                      quantity: 
+                        type: number
+                        description: Cantidad de producto en carrito
+      Cart:
+        type: object
+        properties:
+          status:
+            type: string
+            description: Código de la operación
+          message:
+            type: string
+            description: Estado de la operación
+          data:
+            type: object 
+            description: Carrito creado
+            properties:
+              id:
+                type: string
+                description: Nombre del producto
+              owner:
+                type: string
+                description: Mail del usuario que creó el carrito
+              products:
+                type: array
+                description: Array de productos en carrito
+                items:
+                  properties:
+                    id:
+                      type: string
+                      description: Id de producto en carrito
+                    quantity: 
+                      type: number
+                      description: Cantidad de producto en carrito
+      ClearCart:
+        type: object
+        properties:
+          status:
+            type: string
+            description: Código de la operación
+          message:
+            type: string
+            description: Estado de la operación
+          data:
+            type: object 
+            description: Carrito vaciado
+    tickets:
+      ticket:
+        type: object
+        properties:
+          status:
+            type: string
+            description: Código de la operación
+          message:
+            type: string
+            description: Estado de la operación
+          data:
+            type: object 
+            description: Ticket creado
+            properties:
+              id:
+                type: string
+                description: Id del ticket
+              code:
+                type: string
+                description: Código de compra
+              purchase_datetime:
+                type: string
+                description: Fecha de compra
+              amount:
+                type: number
+                description: Precio a pagar
+              purchaser: 
+                type: string
+                description: Comprador
+    errors:
+      ValidationSchemaError:
+        type: object
+        properties:
+          status:
+            type: number
+            description: Código de error
+          message:
+            type: string
+            description: Validation schema error
+          error:
+            type: string
+            description: No se pudo concretar la operación
+      NotFound:
+        type: object
+        properties:
+          status:
+            type: number
+            description: Código de estadp de la petición
+          message:
+            type: string
+            description: Error de servidor
+          error: 
+            type: string
+            description: Datos del error
+      ErrorGetById:
+        type: object
+        properties:
+          status: 
+            type: number
+            description: Código de error
+          message:
+            type: string
+            description: No se encontró el id en la base de datos
+          error:
+            type: string
+            description: El item no pudo ser encontrado   
+      ErrorUnauthorized:
+        type: object
+        properties:
+          status: 
+            type: number
+            description: Código de error
+          message:
+            type: string
+            description: No se encontró el id en la base de datos
+          error:
+            type: string
+            description: El item no pudo ser encontrado 

@@ -1,0 +1,681 @@
+paths:
+  /api/users/register:
+    post:
+      tags:
+      - users
+      summary: Registro de nuevo usuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/NewUser'
+      responses:
+        200:
+          description: Registro exitoso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/users/PostUser'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+
+  /api/users/login:
+    post:
+      tags:
+      - users
+      summary: Login de usuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/LoginUser'
+      responses:
+        200:
+          description: Usuario se logueó correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/users/LoginUser'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+
+  /api/users/profile-cookie:
+    get:
+      tags:
+      - users
+      summary: Datos del usuario en cookie
+      responses:
+        200:
+          description: Datos del usuario en cookie
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/users/ProfileUser'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+
+  /api/users/all:
+    get:
+      tags:
+      - users
+      summary: Listar todos los usuarios
+      responses:
+        200:
+          description: Lista de usuario registrados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/users/GetAllUsers'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+      security:
+        - BearerAuth: []
+  
+  /api/users/delete:
+    delete:
+      tags:
+      - users
+      summary: Borrar usuarios inactivos
+      responses:
+        200:
+          description: Se borraron los usuarios inactivos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/users/GetAllUsers'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+      security:
+        - BearerAuth: []
+
+  /api/users/profile-img:
+    post:
+      tags:
+      - users
+      summary: Subir imagen de perfil
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                profile:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          description: La imagen se cargó correctamente 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/users/ProfileUser'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+
+  /api/products/:
+    get:
+      tags:
+      - products
+      summary: Listar todos los productos
+      responses:
+        200:
+          description: Lista de productos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/products/GetAllProducts'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+    post:
+      tags:
+      - products
+      summary: Crear un producto
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/BodyProduct'
+        required: true
+      responses:
+        200:
+          description: Se creó el producto correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/products/Product'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+
+  /api/products/{id}:
+    get:
+      tags:
+      - products
+      summary: Buscar producto por id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: id del producto
+          schema:
+            type: string
+      responses:
+        200:
+          description: Producto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/products/Product'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+    put:
+      tags:
+      - products
+      summary: Actualizar un producto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Id del producto a actualizar
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/parameters/schemas/BodyProduct'  
+      responses:
+        200:
+          description: Producto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/products/Product'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+    delete:
+      tags:
+      - products
+      summary: Eliminar un producto
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Id del producto a liminar
+          schema:
+            type: string
+      responses:
+        200:
+          description: Se eliminó el producto correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/products/Product'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+      
+  /api/carts/:
+    get:
+      tags:
+      - carts
+      summary: Listar todos los carritos de usuario
+      responses:
+        200:
+          description: Lista de carritos de un usuario
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/carts/GetAllCarts'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+    post:
+      tags:
+      - carts
+      summary: Crear un carrito
+      responses:
+        200:
+          description: Carrito creado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/carts/Cart'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+
+  /api/carts/{id}:
+    delete: 
+      tags:
+      - carts
+      summary: Borrar un carrito del usuario
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Id del carrito  a eliminar
+          schema:
+            type: string
+      responses:
+        200:
+          description: El carrito se eliminó con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/carts/Cart'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+    get: 
+      tags:
+      - carts
+      summary: Buscar carrito por Id
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: Id del carrito a buscar
+          schema:
+            type: string
+      responses:
+        200:
+          description: Carrito encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/carts/Cart'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+
+  /api/carts/{idCart}/products/{idProd}:
+    post: 
+      tags:
+      - carts
+      summary: Agregar producto al carrito
+      parameters:
+        - in: path
+          name: idCart
+          required: true
+          description: Id del carrito a buscar
+          schema:
+            type: string
+        - in: path
+          name: idProd
+          required: true
+          description: Id del producto
+          schema:
+            type: string
+      responses:
+        200:
+          description: Producto agregado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/carts/Cart'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+    delete:
+      tags:
+      - carts
+      summary: Eliminar producto de carrito
+      parameters:
+        - in: path
+          name: idCart
+          required: true
+          description: Id del carrito a buscar
+          schema:
+            type: string
+        - in: path
+          name: idProd
+          required: true
+          description: Id del producto
+          schema:
+            type: string
+      responses:
+        200:
+          description: Producto eliminado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/carts/Cart'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+
+  /api/carts/clear/{idCart}:
+    delete:
+      tags:
+      - carts
+      summary: Vaciar carrito
+      parameters:
+        - in: path
+          name: idCart
+          required: true
+          description: Id del carrito a buscar
+          schema:
+            type: string
+      responses:
+        200:
+          description: Carrito vaciado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/carts/ClearCart'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
+
+  /api/tickets/{cartId}:
+    post:
+      tags:
+      - tickets
+      summary: Crear ticket de compra
+      parameters:
+        - in: path
+          name: cartId
+          required: true
+          description: Id del carrito a buscar
+          schema:
+            type: string
+      responses:
+        200:
+          description: Ticket generado con éxito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/tickets/ticket'
+        401:
+          description: Usuario no autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ErrorUnauthorized'
+        404: 
+          description: Error en validación del body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/ValidationSchemaError'
+        500:
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schema/errors/NotFound'
