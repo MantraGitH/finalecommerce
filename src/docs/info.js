@@ -9,7 +9,7 @@ export const info = {
     servers: [
       {
         url: "https://finalecommerce.onrender.com",
-        // url: "http://localhost:10000",
+        // url: "http://localhost:8080",
       },
     ],
   },
